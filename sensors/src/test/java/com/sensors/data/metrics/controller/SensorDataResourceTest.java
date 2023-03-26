@@ -39,7 +39,7 @@ public class SensorDataResourceTest {
         Gson gson = new Gson();
         SensorsData sensorsData = gson.fromJson(sample, SensorsData.class);
         when(sensorsDataService.getSensorsDataByCriteria(any())).thenReturn(Optional.of(sensorsData));
-        SensorsData sensorData =  sensorDataResource.getSensorData("S1,S2", "1W",null, "2023-03-31", "AVG,MIN,MAX", "WND,TMP");
+        SensorsData sensorData =  sensorDataResource.getSensorData("S1,S2", "1W","2023-03-16", "2023-03-17", "AVG,MIN,MAX", "WND,TMP");
         assertNotNull(sensorData);
 
     }
