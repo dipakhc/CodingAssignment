@@ -1,7 +1,9 @@
 CodingAssignment
 Summary: Get Sensor Data:
 
-Use command to Run the application mvn spring-boot:run 
+Use command to Run the application mvn spring-boot:run
+
+
 Sample Req:
 
 http://localhost:8080/sensors/data?ids=S1,S2,S3&timesteps=1w&fromDate=2023-03-16&toDate=2023-03-31&stats=AVG,MIN,MAX&metrics=WND,TMP
@@ -57,7 +59,10 @@ Response:
 }
 
 Repsponse Code:
-200 Success
-400+ Data validation.
+
+200+ For Success
+
+400+ for Data validation error.
+
 500 Error.
 
