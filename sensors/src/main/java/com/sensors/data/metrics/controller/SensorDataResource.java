@@ -26,6 +26,7 @@ public class SensorDataResource {
     @GetMapping(path = "/data", produces = "application/json")
     public SensorsData getSensorData(
             @RequestParam(name = "ids", required = false) String ids,
+            @RequestParam(name = "timesteps", required = false) String timesteps,
             @RequestParam(name = "fromDate", required = false) String fromDate,
             @RequestParam(name = "toDate", required = false) String toDate,
             @RequestParam(name = "stats", required = false) String stats,
@@ -57,6 +58,7 @@ public class SensorDataResource {
         if (StringUtils.isNotBlank(ids)) {
             sensor.setMetrics(Arrays.asList(metrics.split(",")));
         }
+        sensor.setTimeSteps(timesteps);
         return sensorsDataService.getSensorsDataByCriteria(sensor).orElse(null);
 
     }

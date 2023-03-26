@@ -43,9 +43,18 @@ public class SensorsDataServiceImpl implements SensorsDataService {
     }
     protected List<SensorDetail> findBySensorsIdS(Sensor sensorsDataRequest) {
         SqlParameterSource parameters = new MapSqlParameterSource("ids", sensorsDataRequest.getIds());
+
+
+    /*    SELECT id,
+        time_bucket(INTERVAL '1 week', time) AS bucket,
+        AVG(temperature) AS avg_temp,
+        AVG(humidity) AS avg_humidity
+        FROM sensor_data
+        WHERE id IN() and time > NOW()-INTERVAL '1 week';*/
+
         //TODO: Construct Dynamic SQL based on Criteria or Create the Views in Database and call the views based on criteria.
         List<SensorDetail> sensorsDataList = jdbcTemplate.query(
-                "SELECT time_bucket('15 minutes', time) AS bucket, avg(value) as avgTemp FROM sensor_dataWHERE id IN (:ids)",
+                "SELECT time_bucket('15 minutes', time) AS bucket, AVG(temperature), as avgTemp,AVG(humidity) AS avgHumidity FROM sensor_data WHERE id IN (:ids) and  time > NOW()-INTERVAL '1 week' ",
                 parameters,
                 (rs, rowNum) ->
                         SensorDetail.builder()
@@ -53,15 +62,15 @@ public class SensorsDataServiceImpl implements SensorsDataService {
                                 .id(rs.getString("id"))
                                 .temperature(Temperature.builder()
                                         .avg(rs.getDouble("avgTemp"))
-                                        .min(rs.getDouble("minTemp"))
+                                       /* .min(rs.getDouble("minTemp"))
                                         .sum(rs.getDouble("sumTemp"))
-                                        .max(rs.getDouble("maxTemp"))
+                                        .max(rs.getDouble("maxTemp"))*/
                                         .build())
                                 .humidity(Humidity.builder()
                                         .avg(rs.getDouble("avgHumidity"))
-                                        .min(rs.getDouble("minHumidity"))
+                                   /*     .min(rs.getDouble("minHumidity"))
                                         .sum(rs.getDouble("sumHumidity"))
-                                        .max(rs.getDouble("maxHumidity"))
+                                        .max(rs.getDouble("maxHumidity"))*/
                                         .build())
                                 .build()
 

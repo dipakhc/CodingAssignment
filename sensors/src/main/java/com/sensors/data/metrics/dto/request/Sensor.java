@@ -17,6 +17,7 @@ import java.util.List;
 @ToString
 public class Sensor {
 
+    private  String timeSteps;
     LocalDate toLocalDate;
     LocalDate fromLocalDate;
     private List<String> ids;
